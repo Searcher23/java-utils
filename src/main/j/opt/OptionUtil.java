@@ -1,6 +1,5 @@
 package j.opt;
 
-import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -49,7 +48,7 @@ public final class OptionUtil
     {
         System.err.println("Options :");
         
-        Class cls = obj.getClass();
+        Class<? extends Object> cls = obj.getClass();
         Field[] fields = cls.getFields();
         for (Field f : fields)
         {
@@ -80,7 +79,7 @@ public final class OptionUtil
 
     private static boolean checkSupported(Field f)
     {
-        Class cls = f.getType();
+        Class<?> cls = f.getType();
         return (cls.equals(Integer.class) ||
                 cls.equals(Integer.TYPE) ||
                 cls.equals(Boolean.class) ||
@@ -103,9 +102,7 @@ public final class OptionUtil
             f.getAnnotation(OptionConstraintRange.class);
         OptionConstraintNonEmpty cNonEmpty = 
             f.getAnnotation(OptionConstraintNonEmpty.class);
-        Option opt = 
-            f.getAnnotation(Option.class);
-        Class cls = f.getType();
+        Class<?> cls = f.getType();
 
         if (cls.equals(Integer.class) ||
             cls.equals(Integer.TYPE))
@@ -220,7 +217,7 @@ public final class OptionUtil
     private static Object parseValue(Field f, String val)
         throws OptionParserException, OptionFieldException
     {
-        Class cls = f.getType();
+        Class<?> cls = f.getType();
         
         if (cls.equals(Boolean.class) || 
             cls.equals(Boolean.TYPE))
@@ -268,7 +265,7 @@ public final class OptionUtil
 
         // Perform sanity checking for option fields
         // and to populate mapping
-        Class cls = obj.getClass();
+        Class<? extends Object> cls = obj.getClass();
 
         // We require the class to be public so that we can get
         // and set the fields

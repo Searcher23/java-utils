@@ -232,10 +232,10 @@ public class ChunkedInputStream extends FilterInputStream
         // multiple buffers might be created but
         // it should be harmless, just that some memory will
         // be allocated for nothing.
-        if (this.skipBuf == null)
-            this.skipBuf = new byte[SKIP_BUF_SIZE];
+        if (ChunkedInputStream.skipBuf == null)
+            ChunkedInputStream.skipBuf = new byte[SKIP_BUF_SIZE];
 
-        final byte[] localBuf = this.skipBuf;
+        final byte[] localBuf = ChunkedInputStream.skipBuf;
         while(left > 0)
         {
             final int nread = read(localBuf, 0, 

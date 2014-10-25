@@ -11,6 +11,7 @@ import java.lang.annotation.*;
  * An immutable class representing an option constraint check
  * failure.
  */
+@SuppressWarnings("serial")
 public class OptionConstraintException 
     extends OptionFieldException
 {

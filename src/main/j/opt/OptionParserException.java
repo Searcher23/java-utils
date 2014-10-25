@@ -10,6 +10,7 @@ import java.lang.reflect.*;
  * An immutable class representing the exception that 
  * may occur when parsing an option.
  */
+@SuppressWarnings("serial")
 public class OptionParserException 
     extends OptionException
 {

@@ -5,7 +5,6 @@
 package j.io;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * This stream allows reading of data in the form of lines as well as

@@ -10,6 +10,7 @@ import java.lang.reflect.*;
  * An immutable class representing an exception
  * associated with a field.
  */
+@SuppressWarnings("serial")
 public class OptionFieldException extends OptionException
 {
     private final Field field;
