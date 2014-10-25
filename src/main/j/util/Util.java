@@ -4,11 +4,14 @@ import java.util.Random;
 
 /**
  * Misc utilities.
+ * 
  * @author Lucas Tan
  */
 public final class Util
 {
-    private Util(){}
+    private Util()
+    {
+    }
 
     private static final ThreadLocal random = new ThreadLocal() {
         @Override
@@ -19,7 +22,7 @@ public final class Util
     };
 
     /**
-     * Gets the thread-local Random object which is thread-safe.
+     * Gets a thread-local {@link Random} object.
      */
     public static Random getRandom()
     {
@@ -27,11 +30,16 @@ public final class Util
     }
 
     /**
-     * Shuffles an array in-place with each possible permutation
-     * having an equal chance of being the outcome.
-     * @param array This array should only have unique elements.
-     * See http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-     * @exception NullPointerException if array is null
+     * Shuffles an array in-place with each possible permutation having an equal
+     * chance of being the outcome.
+     * 
+     * @param array
+     *            This array typically should contain only unique elements.
+     * @exception NullPointerException
+     *                if array is null
+     * @see <a
+     *      href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher-Yates
+     *      shuffle</a>
      */
     public static <T> void shuffle(T[] array)
     {
@@ -43,17 +51,28 @@ public final class Util
     /**
      * Shuffles a contiguous part of an array in-place, with each possible 
      * permutation having an equal chance of being the outcome.
-     * @param array This array should only have unique elements.
-     * @param start Zero-based index of the first element, inclusive.
-     * @param end Zero-based index of the last element, inclusive.
-     * @exception NullPointerException if array is null
-     * @exception IllegalArgumentException if end is lesser than start
-     * @exception IndexOutOfBoundsException if start or end is out of bounds
+     * 
+     * @param array
+     *            This array typically should contain only unique elements.
+     * @param start
+     *            Zero-based index of the first element, inclusive.
+     * @param end
+     *            Zero-based index of the last element, inclusive.
+     * @exception NullPointerException
+     *                if array is null
+     * @exception IllegalArgumentException
+     *                if end is lesser than start
+     * @exception IndexOutOfBoundsException
+     *                if start or end is out of bounds
+     * @see <a
+     *      href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher-Yates
+     *      shuffle</a>
      */
     public static <T> void shuffle(T[] array, int start, int end)
     {
-        if (end < start) throw new IllegalArgumentException("end < start");
-        
+        if (end < start)
+            throw new IllegalArgumentException("end < start");
+
         final Random rand = getRandom();
 
         for (int i = start; i < end; i++)
@@ -68,7 +87,8 @@ public final class Util
     }
 
     /**
-     * Shuffle method for a primitive int array.
+     * Shuffle method for a primitive int array. A specialized method is
+     * required as no method can accept any primitive array.
      */
     public static void shuffle(int[] array)
     {
@@ -83,9 +103,10 @@ public final class Util
             array[idx2] = tmp;
         }
     }
-    
+
     /**
-     * Shuffle method for a primitive char array.
+     * Shuffle method for a primitive char array. A specialized method is
+     * required as no method can accept any primitive array.
      */
     public static void shuffle(char[] array)
     {
