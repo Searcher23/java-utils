@@ -1,19 +1,24 @@
 package j.web;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import j.str.StrUtil;
 
-import j.str.*;
-import j.io.*;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Web utilities.
+ * 
  * @author Lucas Tan
  */
 public final class WebUtil
 {
-    private WebUtil(){}
+    private WebUtil()
+    {
+    }
 
     private static final Pattern ATTRIB_PATTERN =
     // group 1: attrib name (allowing namespace)
@@ -22,10 +27,11 @@ public final class WebUtil
             Pattern.CASE_INSENSITIVE);
 
     /**
-     * Gets the HTML encoded version of a string.
-     * Only the amperstand, angle brackets and double and single quote
-     * characters are encoded.
-     * @exception NullPointerException if s is null
+     * Gets the HTML encoded version of a string. Only the amperstand, angle
+     * brackets and double and single quote characters are encoded.
+     * 
+     * @exception NullPointerException
+     *                if s is null
      */
     public static String htmlEncode(String s)
     {
@@ -40,14 +46,25 @@ public final class WebUtil
         for (int i = 0; i < len; i++)
         {
             final char c = s.charAt(i);
-            switch(c)
+            switch (c)
             {
-            case '<': w.append("&lt;"); break;
-            case '>': w.append("&gt;"); break;
-            case '&': w.append("&amp;"); break;
-            case '"': w.append("&quot;"); break;
-            case '\'': w.append("&apos;"); break;
-            default:  w.append(c);
+            case '<':
+                w.append("&lt;");
+                break;
+            case '>':
+                w.append("&gt;");
+                break;
+            case '&':
+                w.append("&amp;");
+                break;
+            case '"':
+                w.append("&quot;");
+                break;
+            case '\'':
+                w.append("&apos;");
+                break;
+            default:
+                w.append(c);
             }
         }
 
@@ -55,33 +72,35 @@ public final class WebUtil
     }
 
     /**
-     * Writes the HTML encoded version of a string to a writer
-     * output stream.
-     * Only the amperstand, angle brackets and double quote
-     * characters are encoded.
-     * @exception NullPointerException if s or w is null
+     * Writes the HTML encoded version of a string to a writer output stream.
+     * Only the amperstand, angle brackets and double quote characters are
+     * encoded.
+     * 
+     * @exception NullPointerException
+     *                if s or w is null
      */
-    public static void htmlEncode(String s, Writer w)
-        throws IOException
+    public static void htmlEncode(String s, Writer w) throws IOException
     {
         w.append(htmlEncodeInternal(s));
     }
 
     /**
-     * Parses an HTML fragment containing attribute pairs without the
-     * tag name, in to a map.
-     * This is a forgiving parser that does not adhere strictly to XML rules,
-     * but well-formed XML are guaranteed to be parsed correctly.
-     * @param html This must be in the format: attrib1="value" attrib2="value"
+     * Parses an HTML fragment containing attribute pairs without the tag name,
+     * in to a map. This is a forgiving parser that does not adhere strictly to
+     * XML rules, but well-formed XML should be parsed correctly. This is not
+     * intended to be a substitution for a complete parser.
+     * 
+     * @param html
+     *            This must be in the format: attrib1="value" attrib2="value"
      * @return Map of attrib-value pairs. The names and values are NOT HTML
-     * decoded.
+     *         decoded.
      */
-    public static Map<String,String> parseAttrib(String html)
+    public static Map<String, String> parseAttrib(String html)
     {
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String, String> map = new HashMap<String, String>();
 
         Matcher m = ATTRIB_PATTERN.matcher(html);
-        while(m.find())
+        while (m.find())
         {
             map.put(m.group(1), StrUtil.unquote(m.group(2)));
         }
@@ -89,4 +108,3 @@ public final class WebUtil
         return map;
     }
 }
-
