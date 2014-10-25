@@ -15,10 +15,10 @@ public final class WebUtil
 {
     private WebUtil(){}
 
-    private static final Pattern ATTRIB_PATTERN = 
-        // group 1: attrib name (allowing namespace)
-        // group 2: value including quote chars if any
-        Pattern.compile("([\\w:]+)\\s*=\\s*(\"[^\"]*\"|'[^']*'|\\S*)",
+    private static final Pattern ATTRIB_PATTERN =
+    // group 1: attrib name (allowing namespace)
+    // group 2: value including quote chars if any
+    Pattern.compile("([a-z_:][a-z0-9_:.-]*)\\s*=\\s*(\"[^\"]*\"|'[^']*'|\\S*)",
             Pattern.CASE_INSENSITIVE);
 
     /**
