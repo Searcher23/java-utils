@@ -13,9 +13,9 @@ public final class Util
     {
     }
 
-    private static final ThreadLocal random = new ThreadLocal() {
+    private static final ThreadLocal<Random> random = new ThreadLocal<Random>() {
         @Override
-        protected synchronized Object initialValue() 
+        protected Random initialValue()
         {
             return new Random();
         }
@@ -26,7 +26,7 @@ public final class Util
      */
     public static Random getRandom()
     {
-        return (Random) random.get();
+        return random.get();
     }
 
     /**
@@ -49,7 +49,7 @@ public final class Util
     }
 
     /**
-     * Shuffles a contiguous part of an array in-place, with each possible 
+     * Shuffles a contiguous part of an array in-place, with each possible
      * permutation having an equal chance of being the outcome.
      * 
      * @param array
@@ -122,4 +122,3 @@ public final class Util
         }
     }
 }
-
