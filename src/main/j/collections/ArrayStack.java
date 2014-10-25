@@ -252,15 +252,14 @@ public class ArrayStack<E> extends AbstractCollection<E>
     {
         if (a.length < this.size)
         {
-            // Make a new array of a's runtime type, but my contents:
-            final Class newType = a.getClass();
-            
-            a = newType.equals(Object[].class)
+            final Class<? extends Object[]> newType = a.getClass();
+
+            T[] copy = newType.equals(Object[].class)
               ? (T[]) new Object[this.size]
               : (T[]) Array.newInstance(newType.getComponentType(), this.size);
-        
-            copyTo(a);
-            return a;
+
+            copyTo(copy);
+            return copy;
         }
 
         copyTo(a);
