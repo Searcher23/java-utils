@@ -15,7 +15,8 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
     public static class Node<E>
     {
         private E value;
-        private Node<E> prev, next;
+        private Node<E> prev = null, next = null;
+        private LinkedList<E> parent = null;
 
         public Node(E value)
         {
@@ -111,16 +112,11 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
         @Override
         public void remove()
         {
+            if (lastReturned == header)
+                throw new IllegalStateException();
             checkForComodification();
             Node<E> lastNext = lastReturned.next;
-            try
-            {
-                LinkedList.this.remove(lastReturned);
-            }
-            catch (NoSuchElementException e)
-            {
-                throw new IllegalStateException();
-            }
+            LinkedList.this.remove(lastReturned);
             if (next == lastReturned)
                 next = lastNext;
             else
@@ -183,6 +179,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 
     public LinkedList()
     {
+        header.parent = this;
         header.prev = header.next = header;
     }
 
@@ -199,8 +196,13 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 
     private void addBefore(Node<E> newNode, Node<E> node)
     {
+        // check whether the node has been added to anywhere.
+        if (newNode.parent != null)
+            throw new IllegalArgumentException();
+
         newNode.prev = node.prev;
         newNode.next = node;
+        newNode.parent = this;
         node.prev.next = newNode;
         node.prev = newNode;
         size++;
@@ -212,25 +214,36 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
      * 
      * @param node
      *            Must be in the linked list.
-     * @throws NoSuchElementException
+     * @throws IllegalArgumentException
+     *             if the node is not in the linked list.
      */
     public void remove(Node<E> node)
     {
-        if (node == header)
-            throw new NoSuchElementException();
+        if (node.parent != this)
+            throw new IllegalArgumentException();
 
         node.prev.next = node.next;
         node.next.prev = node.prev;
+        // set to null to indicate this node is removed.
         node.prev = node.next = null;
+        node.parent = null;
         size--;
         modCount++;
     }
 
+    /**
+     * @throws IllegalArgumentException
+     *             if the node is already added to some list.
+     */
     public void addFirst(Node<E> newNode)
     {
         addBefore(newNode, header.next);
     }
 
+    /**
+     * @throws IllegalArgumentException
+     *             if the node is already added to some list.
+     */
     public void addLast(Node<E> newNode)
     {
         addBefore(newNode, header);
