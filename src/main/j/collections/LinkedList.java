@@ -250,6 +250,14 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
     }
 
     @Override
+    public boolean add(E e)
+    {
+        Node<E> newNode = new Node<E>(e);
+        addLast(newNode);
+        return true;
+    }
+
+    @Override
     public void addFirst(E e)
     {
         Node<E> newNode = new Node<E>(e);
@@ -391,6 +399,12 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
     }
 
     @Override
+    public boolean remove(Object o)
+    {
+        return removeFirstOccurrence(o);
+    }
+
+    @Override
     public boolean removeFirstOccurrence(Object o)
     {
         if (o == null)
@@ -456,6 +470,51 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
     public Iterator<E> descendingIterator()
     {
         return new DescIter();
+    }
+
+    @Override
+    public Object[] toArray()
+    {
+        Object[] result = new Object[size];
+        int i = 0;
+        for (Node<E> e = header.next; e != header; e = e.next)
+            result[i++] = e.value;
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T[] toArray(T[] a)
+    {
+        if (a.length < size)
+            a = (T[]) java.lang.reflect.Array.newInstance(a.getClass()
+                    .getComponentType(), size);
+        int i = 0;
+        Object[] result = a;
+        for (Node<E> e = header.next; e != header; e = e.next)
+            result[i++] = e.value;
+
+        if (a.length > size)
+            a[size] = null;
+
+        return a;
+    }
+
+    @Override
+    public void clear()
+    {
+        Node<E> e = header.next;
+        while (e != header)
+        {
+            Node<E> next = e.next;
+            e.next = e.prev = null;
+            e.parent = null;
+            e = next;
+        }
+        // reset state
+        header.next = header.prev = header;
+        size = 0;
+        modCount++;
     }
 
     @Override

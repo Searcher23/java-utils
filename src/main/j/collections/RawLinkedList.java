@@ -216,6 +216,13 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
         modCount++;
     }
 
+    @Override
+    public boolean add(E newNode)
+    {
+        addBefore(newNode, header);
+        return true;
+    }
+
     /**
      * @throws IllegalArgumentException
      *             if the node is already added to some list.
@@ -371,6 +378,12 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     }
 
     @Override
+    public boolean remove(Object o)
+    {
+        return removeFirstOccurrence(o);
+    }
+
+    @Override
     public boolean removeFirstOccurrence(Object o)
     {
         if (o != null)
@@ -416,6 +429,51 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     public Iterator<E> descendingIterator()
     {
         return new DescIter();
+    }
+
+    @Override
+    public Object[] toArray()
+    {
+        Object[] result = new Object[size];
+        int i = 0;
+        for (Node<E> e = header.next; e != header; e = e.next)
+            result[i++] = e;
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T[] toArray(T[] a)
+    {
+        if (a.length < size)
+            a = (T[]) java.lang.reflect.Array.newInstance(a.getClass()
+                    .getComponentType(), size);
+        int i = 0;
+        Object[] result = a;
+        for (Node<E> e = header.next; e != header; e = e.next)
+            result[i++] = e;
+
+        if (a.length > size)
+            a[size] = null;
+
+        return a;
+    }
+
+    @Override
+    public void clear()
+    {
+        Node<E> e = header.next;
+        while (e != header)
+        {
+            Node<E> next = e.next;
+            e.next = e.prev = null;
+            e.parent = null;
+            e = next;
+        }
+        // reset state
+        header.next = header.prev = header;
+        size = 0;
+        modCount++;
     }
 
     @Override
