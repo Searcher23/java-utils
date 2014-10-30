@@ -3,9 +3,9 @@ package j.collections;
 import java.util.*;
 
 /**
- * A doubly-linked list that accepts the null element. This class is largely a
- * replica of {@link java.util.LinkedList}, except that it allows direct removal
- * and addition of nodes. This class is not thread-safe.
+ * A doubly-linked list that is largely similar to {@link java.util.LinkedList},
+ * except that it allows direct removal and addition of nodes. This class is not
+ * thread-safe.
  */
 public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
         AbstractSequentialList<E> implements Deque<E>, List<E>, Queue<E>

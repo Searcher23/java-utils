@@ -3,9 +3,9 @@ package j.collections;
 import java.util.*;
 
 /**
- * A doubly-linked list that accepts the null element. This class is largely a
- * replica of {@link java.util.LinkedList}, except that it allows direct removal
- * and addition of nodes.
+ * A doubly-linked list that accepts null. This class is largely similar to
+ * {@link java.util.LinkedList}, except that it allows direct removal and
+ * addition of nodes. This class is not thread-safe.
  * 
  * @param <E>
  */
