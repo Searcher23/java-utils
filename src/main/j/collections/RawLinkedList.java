@@ -7,13 +7,13 @@ import java.util.*;
  * except that it allows direct removal and addition of nodes. This class is not
  * thread-safe.
  */
-public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
+public class RawLinkedList<E extends RawLinkedList.Node> extends
         AbstractSequentialList<E> implements Deque<E>, List<E>, Queue<E>
 {
-    public static class Node<E extends Node<E>>
+    public static class Node
     {
-        private Node<E> prev = null, next = null;
-        private RawLinkedList<E> parent = null;
+        private Node prev = null, next = null;
+        private RawLinkedList<?> parent = null;
 
         /**
          * Whether this node is added to some {@link RawLinkedList}.
@@ -31,8 +31,8 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
      */
     private class ListIter implements ListIterator<E>
     {
-        private Node<E> lastReturned = header;
-        private Node<E> next;
+        private Node lastReturned = header;
+        private Node next;
         private int nextIndex;
         private int expectedModCount = modCount;
 
@@ -180,7 +180,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
         }
     }
 
-    private transient final Node<E> header = new Node<E>();
+    private transient final Node header = new Node();
     private transient int size = 0;
 
     public RawLinkedList()
@@ -189,7 +189,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
         header.prev = header.next = header;
     }
 
-    private void addBefore(Node<E> newNode, Node<E> node)
+    private void addBefore(E newNode, Node node)
     {
         // check whether the node has been added to anywhere.
         if (newNode.parent != null)
@@ -212,7 +212,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
      * @throws IllegalArgumentException
      *             if the node is not in the linked list.
      */
-    public void remove(Node<E> node)
+    public void remove(Node node)
     {
         if (node.parent != this)
             throw new IllegalArgumentException();
@@ -398,7 +398,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     {
         if (o != null)
         {
-            for (Node<E> cur = header.next; cur != header; cur = cur.next)
+            for (Node cur = header.next; cur != header; cur = cur.next)
             {
                 if (o.equals(cur))
                 {
@@ -416,7 +416,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     {
         if (o != null)
         {
-            for (Node<E> cur = header.prev; cur != header; cur = cur.prev)
+            for (Node cur = header.prev; cur != header; cur = cur.prev)
             {
                 if (o.equals(cur))
                 {
@@ -446,7 +446,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     {
         Object[] result = new Object[size];
         int i = 0;
-        for (Node<E> e = header.next; e != header; e = e.next)
+        for (Node e = header.next; e != header; e = e.next)
             result[i++] = e;
         return result;
     }
@@ -460,7 +460,7 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
                     .getComponentType(), size);
         int i = 0;
         Object[] result = a;
-        for (Node<E> e = header.next; e != header; e = e.next)
+        for (Node e = header.next; e != header; e = e.next)
             result[i++] = e;
 
         if (a.length > size)
@@ -472,10 +472,10 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     @Override
     public void clear()
     {
-        Node<E> e = header.next;
+        Node e = header.next;
         while (e != header)
         {
-            Node<E> next = e.next;
+            Node next = e.next;
             e.next = e.prev = null;
             e.parent = null;
             e = next;
