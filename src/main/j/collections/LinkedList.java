@@ -23,7 +23,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
             this.value = value;
         }
 
-        public E getValue()
+        public final E getValue()
         {
             return value;
         }
