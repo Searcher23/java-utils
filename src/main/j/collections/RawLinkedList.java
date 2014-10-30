@@ -14,6 +14,16 @@ public class RawLinkedList<E extends RawLinkedList.Node<E>> extends
     {
         private Node<E> prev = null, next = null;
         private RawLinkedList<E> parent = null;
+
+        /**
+         * Whether this node is added to some {@link RawLinkedList}.
+         * 
+         * @return
+         */
+        public final boolean isAdded()
+        {
+            return parent != null;
+        }
     }
 
     /**

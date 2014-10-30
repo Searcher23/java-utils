@@ -27,6 +27,16 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
         {
             return value;
         }
+
+        /**
+         * Whether this node is added to some {@link LinkedList}.
+         * 
+         * @return
+         */
+        public final boolean isAdded()
+        {
+            return parent != null;
+        }
     }
 
     /**
