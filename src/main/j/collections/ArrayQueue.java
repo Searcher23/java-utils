@@ -67,13 +67,13 @@ public class ArrayQueue<E> extends AbstractQueue<E>
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public E next()
         {
             if (this.left > 0)
             {
                 if (modCount == this.expectedModCount)
                 {
+                    @SuppressWarnings("unchecked")
                     final E ret = (E) elems[this.cur];
                     this.left --;
                     this.cur = (this.cur + 1) % elems.length;
@@ -246,7 +246,6 @@ public class ArrayQueue<E> extends AbstractQueue<E>
     /**
      * Behaves like ArrayList.toArray()
      */
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a)
     {
@@ -257,6 +256,7 @@ public class ArrayQueue<E> extends AbstractQueue<E>
             T[] copy = newType.equals(Object[].class)
               ? (T[]) new Object[this.size]
               : (T[]) Array.newInstance(newType.getComponentType(), this.size);
+            @SuppressWarnings("unchecked")
 
             copyTo(copy);
             return copy;
@@ -354,7 +354,6 @@ public class ArrayQueue<E> extends AbstractQueue<E>
      * @return the element if the queue is non-empty; else null.
      */
     @Override
-    @SuppressWarnings("unchecked")
     public E poll()
     {
         this.modCount++;
@@ -362,6 +361,7 @@ public class ArrayQueue<E> extends AbstractQueue<E>
         if (this.size == 0)
             return null;
         
+        @SuppressWarnings("unchecked")
         final E ret = (E) this.elems[this.startIdx];
         this.elems[this.startIdx] = null;
         this.startIdx = (this.startIdx + 1) % this.elems.length;
@@ -375,7 +375,6 @@ public class ArrayQueue<E> extends AbstractQueue<E>
      * @exception NoSuchElementException if the queue is empty
      */
     @Override
-    @SuppressWarnings("unchecked")
     public E remove()
     {
         this.modCount++;
@@ -383,6 +382,7 @@ public class ArrayQueue<E> extends AbstractQueue<E>
         if (this.size == 0)
             throw new NoSuchElementException();
         
+        @SuppressWarnings("unchecked")
         final E ret = (E) this.elems[this.startIdx];
         this.elems[this.startIdx] = null;
         this.startIdx = (this.startIdx + 1) % this.elems.length;

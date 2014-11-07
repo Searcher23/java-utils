@@ -44,12 +44,12 @@ public final class OrderedPair<A extends Comparable<A>,B extends Comparable<B>>
         return this.second;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object o)
     {
         if (o instanceof OrderedPair)
         {
+            @SuppressWarnings("unchecked")
             OrderedPair<A,B> p = (OrderedPair<A,B>)o;
             return compareTo(p) == 0;
         }

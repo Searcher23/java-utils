@@ -246,14 +246,14 @@ public class ArrayStack<E> extends AbstractCollection<E>
     /**
      * Behaves like ArrayList.toArray()
      */
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a)
     {
         if (a.length < this.size)
         {
             final Class<? extends Object[]> newType = a.getClass();
-
+            
+            @SuppressWarnings("unchecked")
             T[] copy = newType.equals(Object[].class)
               ? (T[]) new Object[this.size]
               : (T[]) Array.newInstance(newType.getComponentType(), this.size);
@@ -364,7 +364,6 @@ public class ArrayStack<E> extends AbstractCollection<E>
      * (the one last pushed).
      * @return the element if the stack is non-empty; else null.
      */
-    @SuppressWarnings("unchecked")
     public E poll()
     {
         this.modCount++;
@@ -374,6 +373,7 @@ public class ArrayStack<E> extends AbstractCollection<E>
             // use long to prevent overflow
             final int lastIdx = 
               (int)((this.startIdx + (long)(this.size - 1)) % this.elems.length);
+            @SuppressWarnings("unchecked")
             final E ret = (E) this.elems[lastIdx];
             this.elems[lastIdx] = null;
             this.size--;
@@ -389,7 +389,6 @@ public class ArrayStack<E> extends AbstractCollection<E>
      * (the one last pushed).
      * @exception NoSuchElementException if the stack is empty
      */
-    @SuppressWarnings("unchecked")
     public E remove()
     {
         this.modCount++;
@@ -399,6 +398,7 @@ public class ArrayStack<E> extends AbstractCollection<E>
             // use long to prevent overflow
             final int lastIdx = 
               (int)((this.startIdx + (long)(this.size - 1)) % this.elems.length);
+            @SuppressWarnings("unchecked")
             final E ret = (E) this.elems[lastIdx];
             this.elems[lastIdx] = null;
             this.size--;
