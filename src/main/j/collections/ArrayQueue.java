@@ -253,10 +253,10 @@ public class ArrayQueue<E> extends AbstractQueue<E>
         {
             final Class<? extends Object[]> newType = a.getClass();
 
+            @SuppressWarnings("unchecked")
             T[] copy = newType.equals(Object[].class)
               ? (T[]) new Object[this.size]
               : (T[]) Array.newInstance(newType.getComponentType(), this.size);
-            @SuppressWarnings("unchecked")
 
             copyTo(copy);
             return copy;
