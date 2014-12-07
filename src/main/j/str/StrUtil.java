@@ -111,4 +111,63 @@ public final class StrUtil
 
         return str;
     }
+
+    /**
+     * Parses integer in a lenient manner, that is, until it encounters a
+     * non-digit char.
+     * 
+     * @param s
+     * @return
+     * @throws NumberFormatException
+     *             if overflow or underflow.
+     */
+    public static int parseInt(String s)
+    {
+        s = s.trim();
+        int mult = 1;
+        int i = 0;
+        if (s.charAt(0) == '-')
+        {
+            mult = -1;
+            i = 1;
+        }
+        long r = 0;
+        final int len = s.length();
+        for (; i < len; i++)
+        {
+            char c = s.charAt(i);
+            int d = c - '0';
+            r = r * 10 + d;
+            if (mult * r > Integer.MAX_VALUE || mult * r < Integer.MIN_VALUE)
+                throw new NumberFormatException();
+        }
+        return (int) (mult * r);
+    }
+
+    /**
+     * @param version
+     *            A version string such as [major].[minor].[revision]
+     * @return Non-null. For any part that is non-parsable, a -1 will take its
+     *         place.
+     */
+    public static int[] parseVersion(String version)
+    {
+        String[] parts = version.split("\\.");
+        int[] r = new int[parts.length];
+        int i = 0;
+
+        for (String p : parts)
+        {
+            try
+            {
+                r[i] = parseInt(p);
+            }
+            catch (NumberFormatException e)
+            {
+                r[i] = -1;
+            }
+            i++;
+        }
+        return r;
+    }
 }
