@@ -5,8 +5,8 @@
 
 ### Compiled binaries
 
-bin/*
-dist-*/*
+/build/
+/.gradle/
 
 *.class
 
@@ -30,7 +30,7 @@ dist-*/*
 
 ### Mac OS generated
 
-__MACOSX # folder
+__MACOSX
 *.DS_Store
 *.DS_Store?
 ._*
