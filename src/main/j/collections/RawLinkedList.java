@@ -12,12 +12,12 @@ public class RawLinkedList<E extends RawLinkedList.Node> extends
 {
     public static class Node
     {
-        private Node prev = null, next = null;
-        private RawLinkedList<?> parent = null;
+        Node prev = null, next = null;
+        RawLinkedList<?> parent = null;
 
         /**
          * Whether this node is added to some {@link RawLinkedList}.
-         * 
+         *
          * @return
          */
         public final boolean isAdded()
@@ -206,7 +206,7 @@ public class RawLinkedList<E extends RawLinkedList.Node> extends
 
     /**
      * Removes a node in constant time.
-     * 
+     *
      * @param node
      *            Must be in the linked list.
      * @throws IllegalArgumentException
