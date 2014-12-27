@@ -1,5 +1,9 @@
 A collection of useful Java utilities / code snippets.
 
+Usage
+=====
+Read the [Java docs](http://lucastan.github.io/java-utils/0.1.0-SNAPSHOT/index.html) on usage.
+
 Building with Gradle
 ====================
 There is no Maven support yet, so you would have to clone this repo and build manually.
