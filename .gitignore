@@ -3,6 +3,16 @@
 *.log
 *.sqlite?
 
+### Android Studio
+
+local.properties
+
+### IDE settings
+
+/.settings/
+/.idea/
+*.iml
+
 ### Compiled binaries
 
 /build/
